@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Services.Interfaces;
+﻿using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Services.Interfaces;
 using School_Managment_System1.Entities;
 
 namespace School_Managment_System1.InterFaces.IRepositories

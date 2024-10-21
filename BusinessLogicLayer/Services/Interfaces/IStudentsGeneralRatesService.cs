@@ -10,7 +10,7 @@ namespace School_Managment_System1.InterFaces.IRepositories
         Task<IEnumerable<StudentGeneralRate>> GetByStartYearAsync(int year);
         Task<IEnumerable<StudentGeneralRate>> GetByEndYearAsync(int year);
         Task<IEnumerable<StudentGeneralRate>> GetByRateAsync(decimal rate);
-        Task<IEnumerable<StudentGeneralRate>> GetByClassNamePAsync(string ClassName);
+        Task<IEnumerable<StudentGeneralRate>> GetByClassNameAsync(string ClassName);
     }
 
 }

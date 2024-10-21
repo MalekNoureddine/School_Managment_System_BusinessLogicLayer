@@ -1,0 +1,6 @@
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.csproj.AssemblyReference.cache
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.AssemblyInfoInputs.cache
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.AssemblyInfo.cs
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.csproj.CoreCompileInputs.cache
+C:\Users\Pc\Documents\GitHub\School_Managment_System_BusinessLogicLayer\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.sourcelink.json

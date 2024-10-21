@@ -7,19 +7,19 @@ using School_Managment_System1.Entities;
 
 namespace BusinessLogicLayer.Services.Interfaces
 {
-    internal interface IAttendanceService 
+    internal interface IAttendanceService : IService<Attendance>
     {
         
             Task<Attendance> GetAttendanceByIdAsync(int id);
-            Task<IEnumerable<Attendance>> GetAllAttendancesAsync();
-            Task MarkAttendanceAsync(Attendance attendance);
-            void MarkAttendance(Attendance attendance);
-            Task MarkAttendanceRangeAsync(List<Attendance> attendance);
-            void MarkAttendanceRange(List<Attendance> attendance);
-            Task UpdateAttendanceAsync(Attendance attendance);
-            void UpdateAttendance(Attendance attendance);
-            void DeleteAttendance(Attendance attendance);
-            Task DeleteAttendanceByIdAsync(int attendance);
+            //Task<IEnumerable<Attendance>> GetAllsAttendancesAsync();
+            //Task MarkAttendanceAsync(Attendance attendance);
+            //void MarkAttendance(Attendance attendance);
+            //Task MarkAttendanceRangeAsync(List<Attendance> attendance);
+            //void MarkAttendanceRange(List<Attendance> attendance);
+            //Task UpdateAttendanceAsync(Attendance attendance);
+            //void UpdateAttendance(Attendance attendance);
+            //void DeleteAttendance(Attendance attendance);
+            //Task DeleteAttendanceByIdAsync(int attendance);
             Task<IEnumerable<Attendance>> GetAttendanceByStudentIdAsync(int StudentID);
             Task<IEnumerable<Attendance>> GetAttendanceByClassNameAsync(string ClassName);
             Task<IEnumerable<Attendance>> GetAttendanceBySessionIdAsync(int SessionID);

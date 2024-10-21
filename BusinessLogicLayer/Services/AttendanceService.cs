@@ -1,4 +1,6 @@
 ﻿using BusinessLogicLayer.Services.Interfaces;
+using BusinessLogicLayer.Validations;
+using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
 using School_Managment_System1.Entities;
 using School_Managment_System1.InterFaces.IRepositories;
@@ -14,17 +16,19 @@ namespace BusinessLogicLayer.Services
     /// <summary>
     /// Service class for managing Attendance-related operations.
     /// </summary>
-    public class AttendanceService : IAttendanceService
+    public class AttendanceService : Service<Attendance>, IAttendanceService
     {
         private readonly IAttendances _attendanceRepository;
+        private readonly IValidator<Attendance> _attendanceValidator;
 
         /// <summary>
         /// Initializes a new instance of the AttendanceService.
         /// </summary>
         /// <param name="attendanceRepository">The repository for attendance operations.</param>
-        public AttendanceService(IAttendances attendanceRepository)
+        public AttendanceService(IAttendances attendanceRepository, IValidator<Attendance> attendanceValidator) : base (attendanceRepository, attendanceValidator)
         {
             _attendanceRepository = attendanceRepository;
+            _attendanceValidator = attendanceValidator;
         }
 
         /// <summary>
@@ -199,58 +203,58 @@ namespace BusinessLogicLayer.Services
 
             return await _attendanceRepository.GetByClassNameAsync_presents(ClassName);
         }
-        /// <summary>
-        /// Marks attendance for a student by adding a new attendance record.
-        /// </summary>
-        /// <param name="attendance">The attendance entity containing attendance details (e.g., student ID, class, session, date).</param>
-        /// <returns>A task that represents the asynchronous operation of adding the attendance record to the repository.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when the attendance object is null.</exception>
+        ///// <summary>
+        ///// Marks attendance for a student by adding a new attendance record.
+        ///// </summary>
+        ///// <param name="attendance">The attendance entity containing attendance details (e.g., student ID, class, session, date).</param>
+        ///// <returns>A task that represents the asynchronous operation of adding the attendance record to the repository.</returns>
+        ///// <exception cref="ArgumentNullException">Thrown when the attendance object is null.</exception>
 
-        public async Task MarkAttendanceAsync(Attendance attendance)
-        {
-            if (attendance == null)
-                throw new ArgumentNullException(nameof(attendance));
-            else
-            await _attendanceRepository.AddAsync(attendance);
-        }
+        //public async Task MarkAttendanceAsync(Attendance attendance)
+        //{
+        //    if (attendance == null)
+        //        throw new ArgumentNullException(nameof(attendance));
+        //    else
+        //    await _attendanceRepository.AddAsync(attendance);
+        //}
 
-        /// <summary>
-        /// Deletes the specified attendance record from the repository.
-        /// </summary>
-        /// <param name="attendance">The attendance record to be deleted. Must not be null.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="attendance"/> is null.</exception>
-        public void DeleteAttendance(Attendance attendance)
-        {
-            if (attendance != null)
-            {
-                _attendanceRepository.Delete(attendance);
-            }
+        ///// <summary>
+        ///// Deletes the specified attendance record from the repository.
+        ///// </summary>
+        ///// <param name="attendance">The attendance record to be deleted. Must not be null.</param>
+        ///// <exception cref="ArgumentNullException">Thrown when <paramref name="attendance"/> is null.</exception>
+        //public void DeleteAttendance(Attendance attendance)
+        //{
+        //    if (attendance != null)
+        //    {
+        //        _attendanceRepository.Delete(attendance);
+        //    }
 
-        }
+        //}
 
-        /// <summary>
-        /// Deletes the attendance record with the specified ID asynchronously.
-        /// </summary>
-        /// <param name="attendanceId">The ID of the attendance record to be deleted. Must be greater than zero.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="attendanceId"/> is less than or equal to zero.</exception>
-        /// <exception cref="KeyNotFoundException">Thrown when an attendance record with the specified ID does not exist.</exception>
+        ///// <summary>
+        ///// Deletes the attendance record with the specified ID asynchronously.
+        ///// </summary>
+        ///// <param name="attendanceId">The ID of the attendance record to be deleted. Must be greater than zero.</param>
+        ///// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="attendanceId"/> is less than or equal to zero.</exception>
+        ///// <exception cref="KeyNotFoundException">Thrown when an attendance record with the specified ID does not exist.</exception>
 
-        public async Task DeleteAttendanceByIdAsync(int attendanceId)
-        {
-            if (attendanceId <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Invalid attendance ID.");
-            }
-            var attendance = await _attendanceRepository.GetByIdAsync(attendanceId);
-            if (attendance != null)
-            {
-                _attendanceRepository.Delete(attendance);
-            }
-            else
-            {
-                throw new KeyNotFoundException($"No attendance record found with ID {attendanceId}.");
-            }
-        }
+        //public async Task DeleteAttendanceByIdAsync(int attendanceId)
+        //{
+        //    if (attendanceId <= 0)
+        //    {
+        //        throw new ArgumentOutOfRangeException("Invalid attendance ID.");
+        //    }
+        //    var attendance = await _attendanceRepository.GetByIdAsync(attendanceId);
+        //    if (attendance != null)
+        //    {
+        //        _attendanceRepository.Delete(attendance);
+        //    }
+        //    else
+        //    {
+        //        throw new KeyNotFoundException($"No attendance record found with ID {attendanceId}.");
+        //    }
+        //}
 
         /// <summary>
         /// Retrieves all attendance records asynchronously.
@@ -264,18 +268,19 @@ namespace BusinessLogicLayer.Services
             return await _attendanceRepository.GetAllAsync();
         }
 
-        /// <summary>
-        /// Updates the specified attendance record.
-        /// </summary>
-        /// <param name="attendance">The attendance object containing updated information.</param>
-        /// <exception cref="ArgumentNullException">Thrown when the attendance object is null.</exception>
-        public async Task UpdateAttendanceAsync(Attendance attendance)
-        {
-            if (attendance == null)
-                throw new ArgumentNullException(nameof(attendance), "Attendance cannot be null");
-            else
-                await _attendanceRepository.UpdateAsync(attendance);
-        }
+        ///// <summary>
+        ///// Updates the specified attendance record.
+        ///// </summary>
+        ///// <param name="attendance">The attendance object containing updated information.</param>
+        ///// <exception cref="ArgumentNullException">Thrown when the attendance object is null.</exception>
+        //public async Task UpdateAttendanceAsync(Attendance attendance)
+        //{
+        //    if (attendance == null)
+        //        throw new ArgumentNullException(nameof(attendance), " cannot be null");
+        //    else
+        //        await _attendanceRepository.UpdateAsync(attendance);
+                
+        //}
 
         
 
@@ -397,72 +402,72 @@ namespace BusinessLogicLayer.Services
             return await _attendanceRepository.GetByDateAsync_absents(date);
         }
 
-        // </summary>
-        /// <param name="attendance">The attendance record to be added. It must not be null.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when the <paramref name="attendance"/> is null.
-        /// </exception>
-        public void MarkAttendance(Attendance attendance)
-        {
-            if (attendance != null)
-                _attendanceRepository.Add(attendance);
-            else
-                throw new ArgumentNullException(nameof(attendance), "Attendance record cannot be null.");
-        }
+        //// </summary>
+        ///// <param name="attendance">The attendance record to be added. It must not be null.</param>
+        ///// <exception cref="ArgumentNullException">
+        ///// Thrown when the <paramref name="attendance"/> is null.
+        ///// </exception>
+        //public void MarkAttendance(Attendance attendance)
+        //{
+        //    if (attendance != null)
+        //        _attendanceRepository.Add(attendance);
+        //    else
+        //        throw new ArgumentNullException(nameof(attendance), "Attendance record cannot be null.");
+        //}
 
-        /// <summary>
-        /// Marks the attendance for multiple students by adding a range of attendance records.
-        /// </summary>
-        /// <param name="attendances">A list of attendance records to be added. It must not be null or empty.</param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the <paramref name="attendances"/> list is null or empty.
-        /// </exception>
-        public async Task MarkAttendanceRangeAsync(List<Attendance> attendances)
-        {
-            if (!attendances.IsNullOrEmpty())
-                await _attendanceRepository.AddRangeAsync(attendances);
-            else
-                throw new ArgumentException("Attendance list cannot be null or empty.", nameof(attendances));
-        }
+        ///// <summary>
+        ///// Marks the attendance for multiple students by adding a range of attendance records.
+        ///// </summary>
+        ///// <param name="attendances">A list of attendance records to be added. It must not be null or empty.</param>
+        ///// <exception cref="ArgumentException">
+        ///// Thrown when the <paramref name="attendances"/> list is null or empty.
+        ///// </exception>
+        //public async Task MarkAttendanceRangeAsync(List<Attendance> attendances)
+        //{
+        //    if (!attendances.IsNullOrEmpty())
+        //        await _attendanceRepository.AddRangeAsync(attendances);
+        //    else
+        //        throw new ArgumentException("Attendance list cannot be null or empty.", nameof(attendances));
+        //}
 
-        /// <summary>
-        /// Marks the attendance for multiple students by adding a range of attendance records.
-        /// </summary>
-        /// <param name="attendances">A list of attendance records to be added. It must not be null or empty.</param>
-        /// <exception cref="ArgumentException">
-        /// Thrown when the <paramref name="attendances"/> list is null or empty.
-        /// </exception>
-        /// <remarks>
-        /// This method does not await the asynchronous operation of adding attendance records.
-        /// Ensure that the calling code handles the operation appropriately.
-        /// </remarks>
-        public void MarkAttendanceRange(List<Attendance> attendances)
-        {
-            if (!attendances.IsNullOrEmpty())
-                _attendanceRepository.AddRangeAsync(attendances);
-            else
-                throw new ArgumentException("Attendance list cannot be null or empty.", nameof(attendances));
-        }
+        ///// <summary>
+        ///// Marks the attendance for multiple students by adding a range of attendance records.
+        ///// </summary>
+        ///// <param name="attendances">A list of attendance records to be added. It must not be null or empty.</param>
+        ///// <exception cref="ArgumentException">
+        ///// Thrown when the <paramref name="attendances"/> list is null or empty.
+        ///// </exception>
+        ///// <remarks>
+        ///// This method does not await the asynchronous operation of adding attendance records.
+        ///// Ensure that the calling code handles the operation appropriately.
+        ///// </remarks>
+        //public void MarkAttendanceRange(List<Attendance> attendances)
+        //{
+        //    if (!attendances.IsNullOrEmpty())
+        //        _attendanceRepository.AddRangeAsync(attendances);
+        //    else
+        //        throw new ArgumentException("Attendance list cannot be null or empty.", nameof(attendances));
+        //}
 
 
-        /// <summary>
-        /// Updates an existing attendance record.
-        /// </summary>
-        /// <param name="attendance">The attendance record to be updated. It must not be null.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when the <paramref name="attendance"/> is null.
-        /// </exception>
-        /// <remarks>
-        /// This method assumes that the provided attendance record exists in the repository.
-        /// If the record does not exist, the update operation may not have any effect.
-        /// </remarks>
-        public void UpdateAttendance(Attendance attendance)
-        {
-            if (attendance != null)
-                _attendanceRepository.Update(attendance);
-            else
-                throw new ArgumentNullException(nameof(attendance), "Attendance cannot be null.");
-        }
+        ///// <summary>
+        ///// Updates an existing attendance record.
+        ///// </summary>
+        ///// <param name="attendance">The attendance record to be updated. It must not be null.</param>
+        ///// <exception cref="ArgumentNullException">
+        ///// Thrown when the <paramref name="attendance"/> is null.
+        ///// </exception>
+        ///// <remarks>
+        ///// This method assumes that the provided attendance record exists in the repository.
+        ///// If the record does not exist, the update operation may not have any effect.
+        ///// </remarks>
+        //public void UpdateAttendance(Attendance attendance)
+        //{
+        //    if (attendance != null)
+        //        _attendanceRepository.Update(attendance);
+        //    else
+        //        throw new ArgumentNullException(nameof(attendance), "Attendance cannot be null.");
+        //}
     }
 
 }
